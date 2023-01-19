@@ -3,35 +3,33 @@ package com.spp.tms.domain;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
-@Builder
-public class Task {
-    private String name;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
-    private String group;
-    private boolean finished;
-    private List<Subtask> subtasks;
-    private String id;
 
-    public Task(String name, String group, List<Subtask> subtasks) {
+public class Task {
+    protected String name;
+    protected LocalDateTime startTime;
+    protected LocalDateTime endTime;
+//    protected Duration duration;
+    protected String group;
+    protected boolean finished;
+    protected String id;
+
+    public Task(String name, String group) {
         this.name = name;
         this.group = group;
-        this.subtasks = subtasks;
         this.startTime = LocalDateTime.now();
         this.id = UUID.randomUUID().toString();
         this.finished = false;
     }
-
-    public Task(String name, LocalDateTime startTime, LocalDateTime endTime, String group, boolean finished, List<Subtask> subtasks, String id) {
+    @Builder
+    public Task(String name, LocalDateTime startTime, LocalDateTime endTime, String group, boolean finished, String id) {
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
         this.group = group;
         this.finished = finished;
-        this.subtasks = subtasks;
+//        this.subtasks = subtasks;
         this.id = id;
     }
 
@@ -62,26 +60,26 @@ public class Task {
         this.group = group;
     }
 
-    public boolean isFinished() {
-        return allSubtasksAreFinished() && finished;
-
+//    public boolean isFinished() {
+//        return allSubtasksAreFinished() && finished;
+//
+//    }
+//
+    public void setFinished() {
+        this.finished = true;
     }
 
     public boolean getFinished() {
         return finished;
     }
 
-    public void setFinished() {
-         this.finished = allSubtasksAreFinished();
-    }
-
-    public List<Subtask> getSubtasks() {
-        return subtasks;
-    }
-
-    public void setSubtasks(List<Subtask> subtasks) {
-        this.subtasks = subtasks;
-    }
+//    public List<Subtask> getSubtasks() {
+//        return subtasks;
+//    }
+//
+//    public void setSubtasks(List<Subtask> subtasks) {
+//        this.subtasks = subtasks;
+//    }
 
     public LocalDateTime getEndTime() {
         return endTime;
@@ -99,11 +97,9 @@ public class Task {
         this.id = id;
     }
 
-    private boolean allSubtasksAreFinished() {
-        if (!subtasks.isEmpty()) {
-            return subtasks.stream().allMatch(Subtask::isFinished);
-        } else {
-            return true;
-        }
-    }
+//    public Duration getDuration(){
+//        return Duration.between(startTime, endTime);
+//    }
+
+
 }

@@ -1,7 +1,8 @@
 package com.spp.tms.service;
 
-import com.spp.tms.domain.Task;
+import com.spp.tms.domain.MainTask;
 import com.spp.tms.domain.request.SaveTaskRequest;
+import com.spp.tms.domain.request.UpdateTaskRequest;
 import com.spp.tms.mapper.RequestMapper;
 import com.spp.tms.storage.TaskStorage;
 import org.springframework.stereotype.Service;
@@ -10,17 +11,23 @@ import org.springframework.stereotype.Service;
 public class TmsService {
     private static TaskStorage storage = new TaskStorage();
 
-    public Task getTask(String id){
+    public MainTask getTask(String id){
         return storage.getTask(id);
     }
 
-    public void updateTask() {
-
+    public void updateTask(UpdateTaskRequest request) {
+        MainTask task = storage.getTask(request.getId());
+        task.setFinished();
+        storage.updateTask(task);
     }
 
     public String saveTask(SaveTaskRequest taskRequest) {
-        Task task = RequestMapper.map(taskRequest);
-        return storage.addTask(task);
+        if(taskRequest != null) {
+            MainTask task = RequestMapper.map(taskRequest);
+            return storage.addTask(task);
+        } else {
+            return null;
+        }
     }
 
     public void deleteTask(String id) {

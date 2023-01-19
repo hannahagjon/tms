@@ -1,7 +1,8 @@
 package com.spp.tms.controller;
 
-import com.spp.tms.domain.Task;
+import com.spp.tms.domain.MainTask;
 import com.spp.tms.domain.request.SaveTaskRequest;
+import com.spp.tms.domain.request.UpdateTaskRequest;
 import com.spp.tms.service.TmsService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,8 +19,8 @@ public class TmsRestController {
         this.service = service;
     }
 
-    @GetMapping(value = "/task")
-    public ResponseEntity<Task> getTask(@PathVariable("taskId") String id) {
+    @GetMapping(value = "/task/{taskId}")
+    public ResponseEntity<MainTask> getTask(@PathVariable("taskId") String id) {
         try {
             return ResponseEntity.ok(service.getTask(id));
         } catch (Exception e) {
@@ -29,14 +30,14 @@ public class TmsRestController {
     }
 
     @PutMapping(value = "/update")
-    public ResponseEntity updateTask(Task task) {
+    public ResponseEntity updateTask(@RequestBody UpdateTaskRequest request) {
         try {
-            service.updateTask();
-            LOGGER.info("in");
-            return ResponseEntity.ok("Ping");
+            service.updateTask(request);
+            return ResponseEntity.ok("Task updated");
         } catch (Exception e) {
-            LOGGER.error("Failed to save task with name: ", e);
-            return ResponseEntity.internalServerError().build();
+            String message = String.format("Failed to update task with id: %s, due to: %s", request.getId(), e.getMessage());
+            LOGGER.error("Failed to update task with id: {}", request.getId(), e);
+            return ResponseEntity.internalServerError().body(message);
         }
     }
 
@@ -44,7 +45,7 @@ public class TmsRestController {
     public ResponseEntity<String> saveTask(@RequestBody SaveTaskRequest taskRequest) {
         try {
             String id = service.saveTask(taskRequest);
-            return ResponseEntity.ok(id);
+            return id != null ? ResponseEntity.ok(id) : ResponseEntity.internalServerError().build();
         } catch (Exception e) {
             LOGGER.error("Failed to save task with name: {}", taskRequest.getName(), e);
             return ResponseEntity.internalServerError().build();
