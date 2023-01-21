@@ -1,9 +1,5 @@
 package com.spp.tms.domain;
 
-import lombok.Builder;
-
-import java.time.LocalDateTime;
-
 public class Subtask extends Task {
 
 //    USED FOR MOCK

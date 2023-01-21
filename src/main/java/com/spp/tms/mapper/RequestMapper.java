@@ -3,6 +3,7 @@ package com.spp.tms.mapper;
 import com.spp.tms.domain.MainTask;
 import com.spp.tms.domain.Subtask;
 import com.spp.tms.domain.request.SaveTaskRequest;
+import com.spp.tms.domain.request.SubtaskRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ public class RequestMapper {
         return  new MainTask(taskRequest.getName(), taskRequest.getGroup(), createSubtasks(taskRequest.getSubtasks()));
     }
 
-    private static List<Subtask> createSubtasks(List<Subtask> subtasks) {
+    private static List<Subtask> createSubtasks(List<SubtaskRequest> subtasks) {
         return subtasks != null ? subtasks.stream()
                 .filter(Objects::nonNull)
                 .map(RequestMapper::mapSubtasks)
@@ -23,7 +24,7 @@ public class RequestMapper {
                 : new ArrayList<>();
     }
 
-    private static Subtask mapSubtasks(Subtask subtask) {
+    private static Subtask mapSubtasks(SubtaskRequest subtask) {
         return new Subtask(subtask.getName(),  subtask.getGroup());
     }
 }

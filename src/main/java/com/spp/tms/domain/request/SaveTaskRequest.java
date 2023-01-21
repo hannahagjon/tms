@@ -1,6 +1,5 @@
 package com.spp.tms.domain.request;
 
-import com.spp.tms.domain.Subtask;
 import lombok.Getter;
 
 import java.util.List;
@@ -8,5 +7,5 @@ import java.util.List;
 public class SaveTaskRequest {
     private String group;
     private String name;
-    private List<Subtask> subtasks;
+    private List<SubtaskRequest> subtasks;
 }

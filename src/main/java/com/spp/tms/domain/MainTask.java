@@ -1,5 +1,6 @@
 package com.spp.tms.domain;
 
+import com.spp.tms.domain.request.SubtaskRequest;
 import com.spp.tms.domain.request.UpdateTaskRequest;
 import lombok.Builder;
 
@@ -58,9 +59,9 @@ public class MainTask extends Task {
         return allSubtasksAreFinished() && finished;
     }
 
-    private void addSubtask(Subtask subtask) {
+    private void addSubtask(SubtaskRequest subtask) {
         if (subtask != null && subtasks != null) {
-            subtasks.add(subtask);
+            subtasks.add(new Subtask(subtask.getName(), subtask.getGroup()));
         }
     }
 
