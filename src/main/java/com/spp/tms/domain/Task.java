@@ -2,6 +2,7 @@ package com.spp.tms.domain;
 
 import lombok.Builder;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -10,7 +11,7 @@ public class Task {
     protected String name;
     protected LocalDateTime startTime;
     protected LocalDateTime endTime;
-//    protected Duration duration;
+    protected Duration duration;
     protected String group;
     protected boolean finished;
     protected String id;
@@ -22,16 +23,16 @@ public class Task {
         this.id = UUID.randomUUID().toString();
         this.finished = false;
     }
-    @Builder
-    public Task(String name, LocalDateTime startTime, LocalDateTime endTime, String group, boolean finished, String id) {
-        this.name = name;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.group = group;
-        this.finished = finished;
-//        this.subtasks = subtasks;
-        this.id = id;
-    }
+//    USED FOR MOCK
+//    @Builder
+//    public Task(String name, LocalDateTime startTime, LocalDateTime endTime, String group, boolean finished, String id) {
+//        this.name = name;
+//        this.startTime = startTime;
+//        this.endTime = endTime;
+//        this.group = group;
+//        this.finished = finished;
+//        this.id = id;
+//    }
 
     public Task() {
     }
@@ -60,26 +61,13 @@ public class Task {
         this.group = group;
     }
 
-//    public boolean isFinished() {
-//        return allSubtasksAreFinished() && finished;
-//
-//    }
-//
-    public void setFinished() {
-        this.finished = true;
+    public void setFinished(boolean finished) {
+        this.finished = finished;
     }
 
     public boolean getFinished() {
         return finished;
     }
-
-//    public List<Subtask> getSubtasks() {
-//        return subtasks;
-//    }
-//
-//    public void setSubtasks(List<Subtask> subtasks) {
-//        this.subtasks = subtasks;
-//    }
 
     public LocalDateTime getEndTime() {
         return endTime;
@@ -93,13 +81,15 @@ public class Task {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public boolean isFinished(){
+        return finished;
     }
 
-//    public Duration getDuration(){
-//        return Duration.between(startTime, endTime);
-//    }
-
+    public long getDuration() {
+        if(startTime != null && endTime != null) {
+            return Duration.between(startTime, endTime).toHours();
+        }
+        return Duration.between(startTime, LocalDateTime.now()).toHours();
+    }
 
 }
