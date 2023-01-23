@@ -18,12 +18,6 @@ public class MainTask extends Task {
         this.subtasks = subtasks != null ? subtasks : new ArrayList<>();
     }
 
-//    USED FOR MOCK
-//    public MainTask(String name, LocalDateTime startDate, LocalDateTime endDate, String groupName, boolean finished, List<Subtask> subtasks, String id) {
-//        super(name, startDate, endDate, groupName, finished, id);
-//        this.subtasks = subtasks != null ? subtasks : new ArrayList<>();;
-//    }
-
     public List<Subtask> getSubtasks() {
         return subtasks;
     }

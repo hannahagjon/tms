@@ -23,16 +23,6 @@ public class Task {
         this.id = UUID.randomUUID().toString();
         this.finished = false;
     }
-//    USED FOR MOCK
-//    @Builder
-//    public Task(String name, LocalDateTime startTime, LocalDateTime endTime, String group, boolean finished, String id) {
-//        this.name = name;
-//        this.startTime = startTime;
-//        this.endTime = endTime;
-//        this.group = group;
-//        this.finished = finished;
-//        this.id = id;
-//    }
 
     public Task() {
     }

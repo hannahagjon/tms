@@ -62,10 +62,4 @@ public class TmsRestController {
             return ResponseEntity.internalServerError().build();
         }
     }
-
-    @PutMapping(value = "/mock")
-    public void mock() {
-        service.mock();
-
-    }
 }
